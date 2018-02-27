@@ -63,7 +63,6 @@
                 if (this.isRenderAll) {
                     return;
                 }
-
             }
         },
 
@@ -103,9 +102,9 @@
             this.$nextTick(() => {
                 this.scrollbar = new ScrollBar(this.$el, {
                     contentWidth: this.$refs.content.scrollWidth,
-                    contentHeight: Math.ceil(this.data.length * this.ih), //this.$refs.content.scrollHeight,
+                    contentHeight: Math.ceil(this.data.length * this.ih), // this.$refs.content.scrollHeight,
                     callBack: this.updateScrollVal
-                })
+                });
             });
         }
     };
