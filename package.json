@@ -1,89 +1,91 @@
 {
-    "name": "v2-lazy-list",
-    "version": "0.0.1",
-    "description": "A simple lazy load list component based Vue 2.x",
-    "author": "dwqs",
-    "license": "MIT",
-    "main": "dist/index.js",
-    "private": false,
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/dwqs/v2-lazy-list.git"
-    },
-    "bugs": {
-      "url": "https://github.com/dwqs/v2-lazy-list/issues"
-    },
-    "homepage": "https://github.com/dwqs/v2-lazy-list",
-    "keywords": [
-      "lazy",
-      "lazyload",
-      "lazy-load-list",
-      "vuejs2",
-      "viewport"
-    ],
-    "files": [
-      "dist",
-      "README.md",
-      "package.json"
-    ],
-    "scripts": {
-      "prepush": "npm run ilint -q",
-      "prepublishOnly": "npm run build",
-      "ilint": "npx eslint src/**/*.js src/**/*.vue",
-      "fix": "npx eslint --fix src/**/*.js src/**/*.vue",
-      "commitmsg": "npx commitlint -e",
-      "dev": "npx cross-env NODE_ENV=development node ./build/dev-server.js",
-      "build": "rm -rf dist && npx cross-env NODE_ENV=production npx webpack --config ./webpack.build.config.js --hide-modules",
-      "build:demos": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --hide-modules && mv ./examples/dist/index.html ./"
-    },
-    "dependencies": {},
-    "peerDependencies": {
-      "vue": ">= 2.5.0"
-    },
-    "devDependencies": {
-      "@commitlint/cli": "^6.1.2",
-      "@commitlint/config-angular": "^6.1.2",
-      "autoprefixer": "^8.0.0",
-      "babel-core": "^6.26.0",
-      "babel-eslint": "^8.2.2",
-      "babel-loader": "^7.1.3",
-      "babel-plugin-transform-runtime": "^6.23.0",
-      "babel-preset-env": "^1.6.1",
-      "babel-preset-stage-2": "^6.24.1",
-      "compression-webpack-plugin": "^1.1.9",
-      "cross-env": "^5.0.5",
-      "css-loader": "^0.28.10",
-      "cssnano": "^3.10.0",
-      "cz-conventional-changelog": "^2.1.0",
-      "eslint": "^4.18.1",
-      "eslint-config-vue": "^2.0.2",
-      "eslint-plugin-vue": "^4.3.0",
-      "extract-text-webpack-plugin": "^3.0.2",
-      "github-markdown-css": "^2.10.0",
-      "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
-      "husky": "^0.14.3",
-      "less": "^3.0.1",
-      "less-loader": "^4.0.6",
-      "open-browser-webpack-plugin": "^0.0.5",
-      "optimize-css-assets-webpack-plugin": "^3.2.0",
-      "postcss-loader": "^2.1.1",
-      "progress-bar-webpack-plugin": "^1.11.0",
-      "vue": "^2.5.13",
-      "vue-loader": "^14.1.1",
-      "vue-style-loader": "^4.0.2",
-      "vue-template-compiler": "^2.5.13",
-      "webpack": "^4.0.0",
-      "webpack-dev-server": "^3.0.0",
-      "webpack-md5-hash": "^0.0.6",
-      "webpack-parallel-uglify-plugin": "^1.0.2"
-    },
-    "engines": {
-      "node": ">= 6.0.0",
-      "npm": ">= 5.2.0"
-    },
-    "config": {
-      "commitizen": {
-        "path": "./node_modules/cz-conventional-changelog"
-      }
+  "name": "v2-lazy-list",
+  "version": "0.0.1",
+  "description": "A simple lazy load list component based Vue 2.x",
+  "author": "dwqs",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dwqs/v2-lazy-list.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dwqs/v2-lazy-list/issues"
+  },
+  "homepage": "https://github.com/dwqs/v2-lazy-list",
+  "keywords": [
+    "lazy",
+    "lazyload",
+    "lazy-load-list",
+    "vuejs2",
+    "viewport"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "prepush": "npm run ilint -q",
+    "prepublishOnly": "npm run build",
+    "ilint": "npx eslint src/**/*.js src/**/*.vue",
+    "fix": "npx eslint --fix src/**/*.js src/**/*.vue",
+    "commitmsg": "npx commitlint -e",
+    "dev": "npx cross-env NODE_ENV=development node ./build/dev-server.js",
+    "build": "rm -rf dist && npx cross-env NODE_ENV=production npx webpack --config ./webpack.build.config.js --hide-modules",
+    "build:exam": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --hide-modules && mv ./examples/dist/index.html ./"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "vue": ">= 2.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^6.1.2",
+    "@commitlint/config-angular": "^6.1.2",
+    "autoprefixer": "^8.0.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.18",
+    "compression-webpack-plugin": "^1.1.9",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.10",
+    "cssnano": "^3.10.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.18.1",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-vue": "^4.3.0",
+    "extract-text-webpack-plugin": "^4.0.0-alpha.0",
+    "github-markdown-css": "^2.10.0",
+    "html-webpack-plugin": "github:webpack-contrib/html-webpack-plugin",
+    "husky": "^0.14.3",
+    "less": "^3.0.1",
+    "less-loader": "^4.0.6",
+    "open-browser-webpack-plugin": "^0.0.5",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^2.1.1",
+    "progress-bar-webpack-plugin": "^1.11.0",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-style-loader": "^4.0.2",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^2.0.9",
+    "webpack-dev-server": "^3.0.0",
+    "webpack-md5-hash": "^0.0.6",
+    "webpack-parallel-uglify-plugin": "^1.0.2"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 5.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
-  }  
+  }
+}
