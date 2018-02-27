@@ -2,4 +2,3 @@ node_modules
 coverage
 package-lock.json
 .cache
-!examples/dist
