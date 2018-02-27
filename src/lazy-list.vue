@@ -16,13 +16,13 @@
         data () {
             return {
 
-            }
+            };
         },
 
         provide () {
             return {
                 list: this
-            }
+            };
         }
-    }
+    };
 </script>
