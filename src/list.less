@@ -1,4 +1,73 @@
+/* scrollbar start */
+.v2-scroll-container {
+    overflow: hidden !important;
+    overflow-anchor: none;
+    &:hover {
+        .v2-scroll__y-bar {
+            width: 5px;
+        }
+
+        .v2-scroll__x-bar {
+            height: 5px;
+        }
+
+        .v2-scroll__y-thumb, .v2-scroll__x-thumb {
+            opacity: 0.75;
+        }
+    }
+}
+
+.v2-scroll__y-bar, .v2-scroll__x-bar {
+    position: absolute;
+    background-color: transparent;
+    z-index: 100;
+    transition: all .2s linear;
+}
+
+.v2-scroll__y-bar {
+    width: 0px;
+    transition: width .2s ease-in-out;
+}
+
+.v2-scroll__x-bar {
+    height: 0px;
+    transition: height .2s ease-in-out;
+}
+
+.v2-scroll__y-thumb, .v2-scroll__x-thumb {
+    position: absolute;
+    border-radius: 6px;
+    background-color: #aaa;
+    opacity: 0;
+    transition: all .2s linear;
+}
+
+.v2-scroll__x-thumb {
+    height: 5px;
+}
+
+.v2-scroll__y-thumb {
+    width: 5px;
+}
+
+/* scrollbar end */
+
 .v2-lazy-list-wrap {
+    position: relative;
     box-sizing: border-box;
-    color: red;
+    width: 100%;
+    overflow: hidden;
+}
+
+.v2-lazy-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.lazy-list-item {
+    height: 40px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d1d5da;
 }
