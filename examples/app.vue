@@ -90,7 +90,6 @@
         margin: 0 auto;
         width: 750px;
         height: 500px;
-        border: 1px solid #d1d5da;
     }
     h2 {
         font-size: 27px;
