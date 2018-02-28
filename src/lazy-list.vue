@@ -5,7 +5,8 @@
         <ul class='v2-lazy-list' ref="content" v-bind:style="{marginTop: contentMarginTop + 'px'}">
             <li class='lazy-list-item' 
                 v-bind:style="{
-                    height: ih + 'px'
+                    height: ih + 'px',
+                    lineHeight: ih + 'px'
                 }" 
                 v-for="(item, index) in renderList" v-bind:key="index">
                 {{item}}
