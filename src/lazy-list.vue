@@ -1,9 +1,13 @@
 <template>
     <div class='v2-lazy-list-wrap' ref="wrap" v-bind:style="{
-        height: containerHeight + 'px'
+        height: viewportHeight + 'px'
     }">
-        <ul class='v2-lazy-list' ref="content">
-            <li class='lazy-list-item' v-for="(item, index) in data" v-bind:key="index">
+        <ul class='v2-lazy-list' ref="content" v-bind:style="{marginTop: contentMarginTop + 'px'}">
+            <li class='lazy-list-item' 
+                v-bind:style="{
+                    height: ih + 'px'
+                }" 
+                v-for="(item, index) in renderList" v-bind:key="index">
                 {{item}}
             </li>
         </ul>
@@ -15,7 +19,7 @@
 
     import ScrollBar from './scrollbar/index.js';
 
-    const CONTAINER_MIN_HEIGHT = 320;
+    const VOEWPORT_MIN_HEIGHT = 320;
     const ITEM_MIN_HEIGHT = 20;
 
     export default {
@@ -28,7 +32,7 @@
 
             height: {
                 type: Number,
-                default: CONTAINER_MIN_HEIGHT
+                default: VOEWPORT_MIN_HEIGHT
             },
 
             itemHeight: {
@@ -42,13 +46,18 @@
             const ih = Number.parseInt(this.itemHeight);
 
             return {
-                renderList: [],
-                isRenderAll: false,
+                renderList: [], // on-demand render the list 
                 scrollTop: 0,
 
-                containerWith: 0,
-                containerHeight: (Number.isNaN(ch) || ch < CONTAINER_MIN_HEIGHT) ? CONTAINER_MIN_HEIGHT : ch,
+                // outside viewport
+                viewportWith: 0,
+                viewportHeight: (Number.isNaN(ch) || ch < VOEWPORT_MIN_HEIGHT) ? VOEWPORT_MIN_HEIGHT : ch,
                 ih: (Number.isNaN(ih) || ih < ITEM_MIN_HEIGHT) ? ITEM_MIN_HEIGHT : ih,
+
+                // inner content
+                contentWidth: NaN,
+                contentHeight: NaN,
+                contentMarginTop: 0,
 
                 scrollbar: null
             };
@@ -57,12 +66,13 @@
         watch: {
             data (val) {
                 this.initRenderList();
+                if (this.scrollbar) {
+                    this.scrollbar.updateContentHeight(this.contentHeight);
+                }
             },
 
             scrollTop (val) {
-                if (this.isRenderAll) {
-                    return;
-                }
+                this.updateRenderList();
             }
         },
 
@@ -74,35 +84,42 @@
 
         methods: {
             initRenderList () {
-                this.isRenderAll = this.renderList.length === this.data.length;
-                if (this.isRenderAll) {
-                    return;
-                }
-
-                const initCount = Math.ceil(this.containerHeight / this.ih) + 1;
-                this.renderList = initCount < this.data.length ? [].concat(this.data.slice(0, initCount)) : [].concat(this.data);
+                this.contentHeight = Math.ceil(this.data.length * this.ih);
+                this.renderList = this.getRenderList();
             },
 
             updateRenderList () {
+                this.renderList = this.getRenderList();
+            },
 
+            getRenderList () {
+                const list = [];
+
+                const from = Math.floor(this.scrollTop / this.ih); 
+                const to = Math.floor((this.scrollTop + this.viewportHeight) / this.ih);
+
+                for(let i = from; i <= to; i++) {
+                    if (!!this.data[i]) {
+                        list.push(this.data[i]);
+                    }
+                }
+                this.contentMarginTop = from * this.ih;
+                return list;
             },
 
             updateScrollVal ({ scrollLeft, scrollTop }) {
-                console.log('scrollTop', scrollTop);
                 this.scrollTop = scrollTop;
             }
         },
 
         mounted () {
-            this.containerWith = this.$el.clientWidth;
-            // this.containerHeight = this.$el.clientHeight;
+            this.viewportWith = this.$el.clientWidth;
 
-            console.log('wwww', this.containerHeight);
             this.initRenderList();
             this.$nextTick(() => {
                 this.scrollbar = new ScrollBar(this.$el, {
-                    contentWidth: this.$refs.content.scrollWidth,
-                    contentHeight: Math.ceil(this.data.length * this.ih), // this.$refs.content.scrollHeight,
+                    contentWidth: this.contentWidth, //this.$refs.content.scrollWidth,
+                    contentHeight: this.contentHeight, // this.$refs.content.scrollHeight,
                     callBack: this.updateScrollVal
                 });
             });
