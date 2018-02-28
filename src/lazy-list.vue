@@ -124,6 +124,10 @@
                     callBack: this.updateScrollVal
                 });
             });
+        },
+
+        beforeDestroy () {
+            this.scrollbar && this.scrollbar.destroy();
         }
     };
 </script>
