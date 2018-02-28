@@ -31,12 +31,12 @@
             },
 
             height: {
-                type: Number,
+                type: [Number, String],
                 default: VOEWPORT_MIN_HEIGHT
             },
 
             itemHeight: {
-                type: Number,
+                type: [Number, String],
                 default: ITEM_MIN_HEIGHT * 2
             }
         },
