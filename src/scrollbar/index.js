@@ -22,6 +22,8 @@ export default class ScrollBar {
         // for mouse drag
         this.startingMousePageY = 0;
         this.startingMousePageX = 0;
+        this.startingScrollTop = 0;
+        this.startingScrollLeft = 0;
         this.yScrollFactor = 0;
         this.xScrollFactor = 0;
         this.dragDirect = '';
@@ -95,7 +97,8 @@ export default class ScrollBar {
     bindWheelEvent () {
         if (typeof window.onwheel !== 'undefined') {
             // passive: https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners?hl=zh-cn
-            this.element.addEventListener('wheel', this.wheelEventHandler, { passive: true });
+            // #https://github.com/utatti/perfect-scrollbar/issues/560
+            this.element.addEventListener('wheel', this.wheelEventHandler, false);
         } else if (typeof window.onmousewheel !== 'undefined') {
             this.element.addEventListener('mousewheel', this.wheelEventHandler, false);
         }
@@ -106,10 +109,10 @@ export default class ScrollBar {
         e.preventDefault();
 
         if (this.dragDirect === 'x') {
-            const scrollLeft = this.xScrollFactor * (e.pageX - this.startingMousePageX);
+            const scrollLeft = this.startingScrollLeft + this.xScrollFactor * (e.pageX - this.startingMousePageX);
             this.element.scrollLeft = scrollLeft > this.maxScrollLeft ? this.maxScrollLeft : scrollLeft;
         } else if (this.dragDirect === 'y') {
-            const scrollTop = this.yScrollFactor * (e.pageY - this.startingMousePageY);
+            const scrollTop = this.startingScrollTop + this.yScrollFactor * (e.pageY - this.startingMousePageY);
             this.element.scrollTop = scrollTop > this.maxScrollTop ? this.maxScrollTop : scrollTop;
         }
 
@@ -130,10 +133,12 @@ export default class ScrollBar {
 
         if (direct === 'x') {
             this.startingMousePageX = e.pageX;
+            this.startingScrollLeft = this.element.scrollLeft;
         }
 
         if (direct === 'y') {
             this.startingMousePageY = e.pageY;
+            this.startingScrollTop = this.element.scrollTop;
         }
         this.dragDirect = direct;
         this.element.ownerDocument.addEventListener('mousemove', this.mouseMoveHandler, false);
@@ -160,6 +165,10 @@ export default class ScrollBar {
     _wheelEventHandler (e) {
         // avoid triggering browser scroll
         e.stopPropagation();
+        if (this.maxScrollTop > 0) {
+            // disable body scroll
+            e.preventDefault();
+        } 
         // Down is positive, Up is negative
         const [deltaX, deltaY] = getDeltaFromEvent(e);
 
