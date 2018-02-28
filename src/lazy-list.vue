@@ -99,8 +99,8 @@
                 const from = Math.floor(this.scrollTop / this.ih); 
                 const to = Math.floor((this.scrollTop + this.viewportHeight) / this.ih);
 
-                for(let i = from; i <= to; i++) {
-                    if (!!this.data[i]) {
+                for (let i = from; i <= to; i++) {
+                    if (this.data[i]) {
                         list.push(this.data[i]);
                     }
                 }
@@ -119,7 +119,7 @@
             this.initRenderList();
             this.$nextTick(() => {
                 this.scrollbar = new ScrollBar(this.$el, {
-                    contentWidth: this.contentWidth, //this.$refs.content.scrollWidth,
+                    contentWidth: this.contentWidth, // this.$refs.content.scrollWidth,
                     contentHeight: this.contentHeight, // this.$refs.content.scrollHeight,
                     callBack: this.updateScrollVal
                 });
