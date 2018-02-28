@@ -47,8 +47,17 @@ export default class ScrollBar {
         this.maxScrollLeft = this.contentWidth - this.containerWidth;
         this.maxScrollTop = this.contentHeight - this.containerHeight;
 
-        this.createBarEle();
+        !!this.maxScrollTop && this.createBarEle();
         this.bindWheelEvent();
+    }
+
+    updateContentHeight (contentHeight) {
+        // async get data
+        this.contentHeight = contentHeight;
+        this.maxScrollTop = contentHeight - this.containerHeight;
+        if (!this.yBar) {
+            this.createBarEle();
+        }
     }
 
     createBarEle () {
@@ -85,7 +94,8 @@ export default class ScrollBar {
 
     bindWheelEvent () {
         if (typeof window.onwheel !== 'undefined') {
-            this.element.addEventListener('wheel', this.wheelEventHandler, false);
+            // passive: https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners?hl=zh-cn
+            this.element.addEventListener('wheel', this.wheelEventHandler, { passive: true });
         } else if (typeof window.onmousewheel !== 'undefined') {
             this.element.addEventListener('mousewheel', this.wheelEventHandler, false);
         }
@@ -96,11 +106,9 @@ export default class ScrollBar {
         e.preventDefault();
 
         if (this.dragDirect === 'x') {
-            // this.element.scrollLeft + 
             const scrollLeft = this.xScrollFactor * (e.pageX - this.startingMousePageX);
             this.element.scrollLeft = scrollLeft > this.maxScrollLeft ? this.maxScrollLeft : scrollLeft;
         } else if (this.dragDirect === 'y') {
-            // this.element.scrollTop + 
             const scrollTop = this.yScrollFactor * (e.pageY - this.startingMousePageY);
             this.element.scrollTop = scrollTop > this.maxScrollTop ? this.maxScrollTop : scrollTop;
         }
@@ -152,13 +160,11 @@ export default class ScrollBar {
     _wheelEventHandler (e) {
         // avoid triggering browser scroll
         e.stopPropagation();
-
-        if (this.maxScrollTop > 0) {
-            e.preventDefault();
-        }
-
-        // e.currentTarget, e.target
+        // Down is positive, Up is negative
         const [deltaX, deltaY] = getDeltaFromEvent(e);
+
+        // const scrollTop = this.element.scrollTop - deltaY * this.wheelSpeed;
+        // this.element.scrollTop = scrollTop > this.maxScrollTop ? this.maxScrollTop : scrollTop;
 
         if (this.shouldUpdateScrollTop(deltaY)) {
             const scrollTop = this.element.scrollTop - deltaY * this.wheelSpeed;
