@@ -58,7 +58,7 @@
         methods: {
             getListData () {
                 const t = [];
-                for(let i = 1; i <= +this.total; i++) {
+                for (let i = 1; i <= +this.total; i++) {
                     t.push(i);
                 }
                 this.list = [].concat(t);
