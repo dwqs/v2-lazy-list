@@ -38,17 +38,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin({
-            filename: '[name].css'
-        }),  
-        new OptimizeCSSPlugin({
-            cssProcessorOptions: {
-                safe: true
-            },
-            cssProcessor: require('cssnano'),
-            assetNameRegExp: /\.less|\.css$/g
-        }),
-
         new ParallelUglifyPlugin({
             workerCount: os.cpus().length,
             cacheDir: '.cache/',
