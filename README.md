@@ -36,5 +36,16 @@ Visit the [examples](https://dwqs.github.io/v2-lazy-list/).
 | height | String/Number | - | 320 | the height of the content wrap element |
 | item-height | String/Number | - | 40 | the height of list item |
 
+## Development
+```
+git clone git@github.com:dwqs/v2-lazy-list.git
+
+cd v2-lazy-list
+
+npm i 
+
+npm run dev
+```
+
 ## LICENSE
 MIT
