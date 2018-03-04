@@ -18,7 +18,8 @@
 <script>
     import './list.less';
 
-    import ScrollBar from './scrollbar/index.js';
+    import 'beautify-scrollbar/dist/index.css';
+    import BeautifyScrollbar from 'beautify-scrollbar';
 
     const VOEWPORT_MIN_HEIGHT = 320;
     const ITEM_MIN_HEIGHT = 20;
@@ -28,7 +29,8 @@
         props: {
             data: {
                 type: Array,
-                default: () => []
+                default: () => [],
+                required: true
             },
 
             height: {
@@ -39,6 +41,11 @@
             itemHeight: {
                 type: [Number, String],
                 default: ITEM_MIN_HEIGHT * 2
+            },
+
+            threshold: {
+                type: [Number, String],
+                default: 0
             }
         },
 
@@ -68,12 +75,19 @@
             data (val) {
                 this.initRenderList();
                 if (this.scrollbar) {
-                    this.scrollbar.updateContentHeight(this.contentHeight);
+                    this.$nextTick(() => {
+                        this.scrollbar.update({
+                            contentHeight: this.contentHeight
+                        });
+                    });
                 }
             },
 
             scrollTop (val) {
                 this.updateRenderList();
+                if (this.threshold > 0 && this.contentHeight - this.viewportHeight - val <= this.threshold) {
+                    this.reachThreshold();
+                }
             }
         },
 
@@ -97,10 +111,10 @@
                 const list = [];
 
                 const from = Math.floor(this.scrollTop / this.ih); 
-                const to = Math.floor((this.scrollTop + this.viewportHeight) / this.ih);
+                const to = Math.ceil((this.scrollTop + this.viewportHeight) / this.ih);
 
-                for (let i = from; i <= to; i++) {
-                    if (this.data[i]) {
+                for (let i = from; i < to; i++) {
+                    if (typeof this.data[i] !== 'undefined') {
                         list.push(this.data[i]);
                     }
                 }
@@ -108,26 +122,31 @@
                 return list;
             },
 
-            updateScrollVal ({ scrollLeft, scrollTop }) {
-                this.scrollTop = scrollTop;
+            updateScrollVal () {
+                this.scrollTop = this.scrollbar.element.scrollTop;
+            },
+
+            reachThreshold () {
+                this.$emit('reach-threshold');
             }
         },
 
         mounted () {
             this.viewportWith = this.$el.clientWidth;
 
-            this.initRenderList();
+            this.data.length && this.initRenderList();
             this.$nextTick(() => {
-                this.scrollbar = new ScrollBar(this.$el, {
-                    contentWidth: this.contentWidth, // this.$refs.content.scrollWidth,
-                    contentHeight: this.contentHeight, // this.$refs.content.scrollHeight,
-                    callBack: this.updateScrollVal
+                this.scrollbar = new BeautifyScrollbar(this.$el, {
+                    contentWidth: this.contentWidth,
+                    contentHeight: this.contentHeight
                 });
+                this.$el.addEventListener('bs-update-scroll-value', this.updateScrollVal, false);
             });
         },
 
         beforeDestroy () {
             this.scrollbar && this.scrollbar.destroy();
+            this.$el.removeEventListener('bs-update-scroll-value', this.updateScrollVal, false);
         }
     };
 </script>

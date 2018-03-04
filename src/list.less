@@ -57,9 +57,7 @@
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
-    border-top: 1px solid #d1d5da;
-    border-left: 1px solid #d1d5da;
-    border-right: 1px solid #d1d5da;
+    border: 1px solid #d1d5da;
 }
 
 .v2-lazy-list {
@@ -78,4 +76,7 @@
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid #d1d5da;
+    &:last-child {
+        border-bottom: none;
+    }
 }
