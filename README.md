@@ -7,18 +7,19 @@ A simple lazy-load list component based Vue 2.x, which will be on-demand renderi
 npm:
 
 ```
-npm i --save v2-lazy-list
+npm i --save v2-lazy-list beautify-scrollbar
 ```
 or yarn
 
 ```
-yarn add  v2-lazy-list
+yarn add  v2-lazy-list beautify-scrollbar
 ```
 
 ## Get Started
 
 ```
 import Vue from 'vue';
+import 'beautify-scrollbar/dist/index.css';
 import V2LazyList from 'v2-lazy-list';
 
 Vue.use(V2LazyList)
