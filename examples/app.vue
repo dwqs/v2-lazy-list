@@ -8,13 +8,13 @@
             <h3>Quick Start/快速开始</h3> 
             <div class="install">
                 <h4>Install/安装</h4> 
-                <pre>npm i --save v2-lazy-list</pre> 
+                <pre>npm i --save v2-lazy-list beautify-scrollbar</pre> 
                 <p>Or</p> 
-                <pre>yarn add v2-lazy-list</pre>
+                <pre>yarn add v2-lazy-list beautify-scrollbar</pre>
             </div> 
             <div class="register">
                 <h4>Global Register/全局注册</h4> 
-                <pre>import Vue from 'vue';<br><br>import V2LazyList from 'v2-lazy-list';<br><br>Vue.use(V2LazyList);<br></pre>
+                <pre>import Vue from 'vue';<br><br>import 'beautify-scrollbar/dist/index.css';<br><br>import V2LazyList from 'v2-lazy-list';<br><br>Vue.use(V2LazyList);<br></pre>
             </div>
             <div class="register">
                 <h4>Basic Usage/基本使用</h4> 

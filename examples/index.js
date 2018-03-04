@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+import 'beautify-scrollbar/dist/index.css';
 import V2LazyList from '../src/index';
 
 import App from './app';
