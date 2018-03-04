@@ -29,12 +29,17 @@ Vue.use(V2LazyList)
 Visit the [examples](https://dwqs.github.io/v2-lazy-list/).
 
 ## Available Props
-
 |  Attribute  |  Type  |  Accepted Values  |  Default  |  Description  |
 |  :--:  |  :--:  |  :--:  |  :--:  |  :--:  |
 | data | Array | - | [] | the list data to render |
 | height | String/Number | - | 320 | the height of the content wrap element |
 | item-height | String/Number | - | 40 | the height of list item |
+| threshold | String/Number | - | 0 | the threshold value to trigger next-fetch in infinite scrolling |
+
+## Events
+|  Event Name  |  Description  |  Parameters |
+|  :--:  |  :--:  |  :--: |
+| reach-threshold | triggers when reaching threshold value| - |
 
 ## Development
 ```
