@@ -37,7 +37,9 @@
     "build": "rm -rf dist && npx cross-env NODE_ENV=production npx webpack --config ./webpack.build.config.js --hide-modules",
     "build:exam": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --hide-modules && mv ./examples/dist/index.html ./"
   },
-  "dependencies": {},
+  "dependencies": {
+    "beautify-scrollbar": "^1.0.2"
+  },
   "peerDependencies": {
     "vue": ">= 2.2.0"
   },
