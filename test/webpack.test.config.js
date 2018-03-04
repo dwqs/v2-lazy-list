@@ -21,6 +21,11 @@ module.exports = {
                 test: /\.less$/,
                 type: 'javascript/auto',
                 use: ['vue-style-loader', 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.css$/,
+                type: 'javascript/auto',
+                use: ['vue-style-loader', 'css-loader', 'less-loader']
             }
         ]
     },
