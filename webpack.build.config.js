@@ -37,6 +37,14 @@ module.exports = {
             }
         ]
     },
+    externals: {
+        'beautify-scrollbar': {
+            root: 'BeautifyScrollbar',
+            commonjs2: 'beautify-scrollbar',
+            commonjs: 'beautify-scrollbar',
+            amd: 'beautify-scrollbar'
+        }
+    },
     plugins: [
         new ParallelUglifyPlugin({
             workerCount: os.cpus().length,
