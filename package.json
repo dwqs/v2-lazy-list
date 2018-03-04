@@ -1,6 +1,6 @@
 {
   "name": "v2-lazy-list",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A simple lazy load list component based Vue 2.x",
   "author": "dwqs",
   "license": "MIT",
@@ -37,11 +37,10 @@
     "build": "rm -rf dist && npx cross-env NODE_ENV=production npx webpack --config ./webpack.build.config.js --hide-modules",
     "build:exam": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --hide-modules && mv ./examples/dist/index.html ./"
   },
-  "dependencies": {
-    "beautify-scrollbar": "^1.0.2"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "vue": ">= 2.2.0"
+    "vue": ">= 2.2.0",
+    "beautify-scrollbar": "^1.0.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^6.1.2",
@@ -88,7 +87,8 @@
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.0.0",
     "webpack-md5-hash": "^0.0.6",
-    "webpack-parallel-uglify-plugin": "^1.0.2"
+    "webpack-parallel-uglify-plugin": "^1.0.2",
+    "beautify-scrollbar": "^1.0.2"
   },
   "engines": {
     "node": ">= 6.0.0",
