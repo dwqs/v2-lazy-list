@@ -18,7 +18,6 @@
 <script>
     import './list.less';
 
-    import 'beautify-scrollbar/dist/index.css';
     import BeautifyScrollbar from 'beautify-scrollbar';
 
     const VOEWPORT_MIN_HEIGHT = 320;
