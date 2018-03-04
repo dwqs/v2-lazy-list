@@ -35,6 +35,13 @@
         <div class="demo-wrap">
             <v2-lazy-list v-bind:data='list' v-bind:height="height" v-bind:item-height="itemHeight"></v2-lazy-list>
         </div>
+        <div class="demo-selection">
+            Infinite Scrolling
+        </div>
+        <div class="demo-wrap">
+            <v2-lazy-list v-bind:data='list2' :threshold="20" @reach-threshold="appendList2Data" v-bind:height="height" v-bind:item-height="itemHeight"></v2-lazy-list>
+            <div class="loading" v-if="loading && text">{{text}}</div>
+        </div>
     </div>
 </template>
 
@@ -44,8 +51,13 @@
             return {
                 total: 100,
                 list: [],
+                list2: [],
                 itemHeight: 40,
-                height: 500
+                height: 500,
+                page: 1,
+                pageSize: 15,
+                loading: false,
+                text: 'loading'
             }
         },
 
@@ -62,11 +74,45 @@
                     t.push(i);
                 }
                 this.list = [].concat(t);
+            },
+
+            getList2Data () {
+                const arr = [];
+                for (let i = 0; i <= this.page * this.pageSize; i++) {
+                    arr.push(i);
+                }
+
+                this.list2 = [].concat(arr);
+                this.page++;
+            },
+
+            appendList2Data () {
+                if (this.loading) {
+                    return;
+                }
+                this.loading = true;
+                setTimeout(() => {
+                    if (this.page === 5) {
+                        this.text = '';
+                        this.list2.push('No more data');
+                        return;
+                    }
+                    const arr = this.list2;
+                    for (let i = (this.page - 1) * this.pageSize, l = this.page * this.pageSize; i < l; i++) {
+                        arr.push(i);
+                    }
+                    this.list2 = [].concat(arr);
+                    this.page++;
+                    this.loading = false;
+                }, 2000);
             }
         },
 
         mounted () {
             this.getListData();
+            setTimeout(() => {
+                this.getList2Data();
+            }, 2000);
         }
     }
 </script>
@@ -103,6 +149,13 @@
         position: fixed;
         right: 0;
         top: 0;
+    }
+    .loading {
+        height: 40px;
+        line-height: 40px;
+        border-left: 1px solid #d1d5da;
+        border-right: 1px solid #d1d5da;
+        border-bottom: 1px solid #d1d5da;
     }
     .start {
         margin-top: 40px;
