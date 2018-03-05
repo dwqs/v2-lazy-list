@@ -105,7 +105,7 @@ export default {
                 'v2-lazy-list-wrap': true
             },
             style: {
-                height: this.viewportHeight + 'px',
+                height: this.viewportHeight + 'px'
             }
         }, [children]);
     },
