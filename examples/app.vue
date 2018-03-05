@@ -33,7 +33,23 @@
             </select>
         </div>
         <div class="demo-wrap">
-            <v2-lazy-list v-bind:data='list' v-bind:height="height" v-bind:item-height="itemHeight"></v2-lazy-list>
+            <v2-lazy-list v-bind:data='list' v-bind:height="height" v-bind:item-height="itemHeight" tag="div" item-tag="div">
+                <template slot-scope="item">
+                    <span>{{item}}</span>
+                </template>
+            </v2-lazy-list>
+        </div>
+        <div class="demo-code">
+            <pre>
+                &lt;v2-lazy-list :data='list' :height="500" :item-height="40" 
+                    tag="div" 
+                    item-tag="div"
+                &gt;
+                    &lt;template slot-scope="item"&gt;
+                        &lt;span&gt;\{\{item\}\}&lt;/span&gt;
+                    &lt;/template&gt;
+                &lt;/v2-lazy-list&gt;
+            </pre>
         </div>
         <div class="demo-selection">
             Infinite Scrolling
@@ -41,6 +57,15 @@
         <div class="demo-wrap">
             <v2-lazy-list v-bind:data='list2' :threshold="20" @reach-threshold="appendList2Data" v-bind:height="height" v-bind:item-height="itemHeight"></v2-lazy-list>
             <div class="loading" v-if="loading && text">{{text}}</div>
+        </div>
+        <div class="demo-code">
+            <pre>
+                &lt;v2-lazy-list :data='list2' height="500" item-height="40" 
+                    :threshold="20" 
+                    @reach-threshold="appendList2Data"
+                &gt;
+                &lt;/v2-lazy-list&gt;
+            </pre>
         </div>
     </div>
 </template>
@@ -137,6 +162,7 @@
         width: 750px;
         height: 500px;
     }
+
     h2 {
         font-size: 27px;
         font-weight: 400;
@@ -157,7 +183,7 @@
         border-right: 1px solid #d1d5da;
         border-bottom: 1px solid #d1d5da;
     }
-    .start {
+    .start, .demo-code {
         margin-top: 40px;
         text-align: left;
         margin-left: 20px;
