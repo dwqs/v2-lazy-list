@@ -2,8 +2,8 @@ import './list.less';
 import LazyList from './lazy-list.js';
 
 function install (Vue) {
-    if (Vue.version < 2.2) {
-        throw new Error('Only adapted to Vue 2.2.0 or higher');
+    if (Vue.version < 2.5) {
+        throw new Error('Only adapted to Vue 2.5.0 or higher');
     }
     Vue.component(LazyList.name, LazyList);
 }
