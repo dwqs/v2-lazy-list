@@ -1,4 +1,5 @@
-import LazyList from './lazy-list.vue';
+import './list.less';
+import LazyList from './lazy-list.js';
 
 function install (Vue) {
     if (Vue.version < 2.2) {
