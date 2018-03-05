@@ -1,4 +1,4 @@
-![webpack-4](https://img.shields.io/badge/webpack-4-brightgreen.svg) ![vue-version](https://img.shields.io/badge/vue-%3E%3D2.2.0-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![npm-version](https://img.shields.io/npm/v/v2-lazy-list.svg) [![build pass](https://api.travis-ci.org/dwqs/v2-lazy-list.svg?branch=master)](https://travis-ci.org/dwqs/v2-lazy-list?branch=master)
+![webpack-4](https://img.shields.io/badge/webpack-4-brightgreen.svg) ![vue-version](https://img.shields.io/badge/vue-%3E%3D2.5.0-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![npm-version](https://img.shields.io/npm/v/v2-lazy-list.svg) [![build pass](https://api.travis-ci.org/dwqs/v2-lazy-list.svg?branch=master)](https://travis-ci.org/dwqs/v2-lazy-list?branch=master)
 # v2-lazy-list
 A simple lazy-load list component based Vue 2.x, which will be on-demand rendering the list based container element's viewport.
 
@@ -36,6 +36,8 @@ Visit the [examples](https://dwqs.github.io/v2-lazy-list/).
 | height | String/Number | - | 320 | the height of the content wrap element |
 | item-height | String/Number | - | 40 | the height of list item |
 | threshold | String/Number | - | 0 | the threshold value to trigger next-fetch in infinite scrolling |
+| tag | String | HTML tag name | 'ul' | container elment tag |
+| item-tag | String | HTML tag name | 'li' | item element tag |
 
 ## Events
 |  Event Name  |  Description  |  Parameters |
