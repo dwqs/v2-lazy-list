@@ -2,6 +2,8 @@
 # v2-lazy-list
 A simple lazy-load list component based Vue 2.x, which will be on-demand rendering the list based container element's viewport.
 
+>v1.x is not maintained
+
 ## Installation
 
 npm:
