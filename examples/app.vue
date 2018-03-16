@@ -31,6 +31,7 @@
                 <option value="200">200</option>
                 <option value="1000">1000</option>
             </select>
+            mode: demand
         </div>
         <div class="demo-wrap">
             <v2-lazy-list v-bind:data='list' v-bind:height="height" v-bind:item-height="itemHeight" tag="div" item-tag="div">
@@ -44,6 +45,37 @@
                 &lt;v2-lazy-list :data='list' :height="500" :item-height="40" 
                     tag="div" 
                     item-tag="div"
+                &gt;
+                    &lt;template slot-scope="item"&gt;
+                        &lt;span&gt;\{\{item\}\}&lt;/span&gt;
+                    &lt;/template&gt;
+                &lt;/v2-lazy-list&gt;
+            </pre>
+        </div>
+        <div class="demo-selection">
+            Totals:
+            <select v-model="total2">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value="1000">1000</option>
+            </select>
+            mode: lazy
+        </div>
+        <div class="demo-wrap">
+            <v2-lazy-list v-bind:data='list3' mode="lazy" v-bind:height="height" v-bind:item-height="itemHeight" tag="div" item-tag="div">
+                <template slot-scope="item">
+                    <span>{{item}}</span>
+                </template>
+            </v2-lazy-list>
+        </div>
+        <div class="demo-code">
+            <pre>
+                &lt;v2-lazy-list :data='list' :height="500" :item-height="40" 
+                    tag="div" 
+                    item-tag="div"
+                    mode="lazy"
                 &gt;
                     &lt;template slot-scope="item"&gt;
                         &lt;span&gt;\{\{item\}\}&lt;/span&gt;
@@ -75,20 +107,26 @@
         data () {
             return {
                 total: 100,
+                total2: 100,
                 list: [],
                 list2: [],
+                list3: [],
                 itemHeight: 40,
                 height: 500,
                 page: 1,
                 pageSize: 15,
                 loading: false,
                 text: 'loading'
-            }
+            };
         },
 
         watch: {
             total (val) {
                 this.getListData();
+            },
+
+            total2 () {
+                this.getList3Data();
             }
         },
 
@@ -99,6 +137,14 @@
                     t.push(i);
                 }
                 this.list = [].concat(t);
+            },
+
+            getList3Data () {
+                const t = [];
+                for (let i = 1; i <= +this.total2; i++) {
+                    t.push(i);
+                }
+                this.list3 = [].concat(t);
             },
 
             getList2Data () {
@@ -135,6 +181,7 @@
 
         mounted () {
             this.getListData();
+            this.getList3Data();
             setTimeout(() => {
                 this.getList2Data();
             }, 2000);
@@ -169,7 +216,7 @@
     }
     .demo-selection {
          margin: 20px auto;
-         width: 188px;
+         width: 210px;
     }
     a {
         position: fixed;
