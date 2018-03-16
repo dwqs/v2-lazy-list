@@ -35,6 +35,12 @@ export default {
         threshold: {
             type: [Number, String],
             default: 0
+        },
+
+        mode: {
+            type: String,
+            default: 'demand',
+            validator: val => ['demand', 'lazy'].indexOf(val) > -1
         }
     },
 
@@ -111,20 +117,25 @@ export default {
     },
 
     methods: {
-        renderItem () {
-
-        },
-
         initRenderList () {
             this.contentHeight = Math.ceil(this.data.length * this.ih);
-            this.renderList = this.getRenderList();
+            if (this.mode === 'demand') {
+                this.renderList = this.getDemandList();
+            } else if (this.mode === 'lazy') {
+                this.renderList = this.getLazyList();
+            }
         },
 
         updateRenderList () {
-            this.renderList = this.getRenderList();
+            if (this.mode === 'demand') {
+                this.renderList = this.getDemandList();
+            } else if (this.mode === 'lazy') {
+                this.renderList = this.getLazyList();
+            }
         },
-
-        getRenderList () {
+        
+        // get demand list
+        getDemandList () {
             const list = [];
 
             const from = Math.floor(this.scrollTop / this.ih); 
@@ -146,6 +157,37 @@ export default {
                 }
             }
             this.contentMarginTop = from * this.ih;
+            return list;
+        },
+
+        // get lazy list
+        getLazyList () {
+            if (this.renderList.length === this.data.length) {
+                return this.renderList;
+            }
+            
+            const list = [].concat(this.renderList);            
+
+            const from = list.length; 
+            const to = Math.ceil((this.scrollTop + this.viewportHeight) / this.ih);
+
+            for (let i = from; i < to; i++) {
+                if (typeof this.data[i] !== 'undefined') {
+                    list.push(
+                        this.$h(this.itemTag, {
+                            class: {
+                                'lazy-list-item': true
+                            },
+                            style: {
+                                height: this.ih + 'px',
+                                lineHeight: this.ih + 'px'
+                            }
+                        }, this.$scopedSlots.default ? this.$scopedSlots.default(this.data[i]) : [i])
+                    );
+                }
+            }
+
+            this.contentMarginTop = 0;
             return list;
         },
 
