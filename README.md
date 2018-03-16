@@ -40,6 +40,7 @@ Visit the [examples](https://dwqs.github.io/v2-lazy-list/).
 | threshold | String/Number | - | 0 | the threshold value to trigger next-fetch in infinite scrolling |
 | tag | String | HTML tag name | 'ul' | container elment tag |
 | item-tag | String | HTML tag name | 'li' | item element tag |
+| mode | String | demand/lazy | 'demand' | render demand list or lazy list |
 
 ## Events
 |  Event Name  |  Description  |  Parameters |
