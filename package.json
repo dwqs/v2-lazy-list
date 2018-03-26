@@ -52,6 +52,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
+    "beautify-scrollbar": "^1.0.5",
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.18",
     "compression-webpack-plugin": "^1.1.9",
@@ -87,8 +88,7 @@
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.0.0",
     "webpack-md5-hash": "^0.0.6",
-    "webpack-parallel-uglify-plugin": "^1.0.2",
-    "beautify-scrollbar": "^1.0.2"
+    "webpack-parallel-uglify-plugin": "^1.0.2"
   },
   "engines": {
     "node": ">= 6.0.0",
