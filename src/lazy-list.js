@@ -45,16 +45,25 @@ export default {
     },
 
     data () {
-        const ch = Number.parseInt(this.height);
-        const ih = Number.parseInt(this.itemHeight);
+        const ih = Number.parseInt(this.itemHeight, 10);
+        const isPercent = String(this.height).indexOf('%') > -1;
+
+        let vh = Number.parseInt(this.height, 10);
+
+        if (isPercent) {
+            vh = this.height;
+        } else {
+            vh = (Number.isNaN(vh) || vh < VOEWPORT_MIN_HEIGHT) ? VOEWPORT_MIN_HEIGHT : vh;
+        }
 
         return {
             renderList: [], // on-demand render the list 
             scrollTop: 0,
+            isPercent: isPercent,
 
             // outside viewport
             viewportWith: 0,
-            viewportHeight: (Number.isNaN(ch) || ch < VOEWPORT_MIN_HEIGHT) ? VOEWPORT_MIN_HEIGHT : ch,
+            viewportHeight: vh,
             ih: (Number.isNaN(ih) || ih < ITEM_MIN_HEIGHT) ? ITEM_MIN_HEIGHT : ih,
 
             // inner content
@@ -62,20 +71,15 @@ export default {
             contentHeight: NaN,
             contentMarginTop: 0,
 
-            scrollbar: null
+            scrollbar: null,
+            wrapRect: null
         };
     },
 
     watch: {
         data (val) {
             this.initRenderList();
-            if (this.scrollbar) {
-                this.$nextTick(() => {
-                    this.scrollbar.update({
-                        contentHeight: this.contentHeight
-                    });
-                });
-            }
+            this.updateScrollbar();
         },
 
         scrollTop (val) {
@@ -111,7 +115,7 @@ export default {
                 'v2-lazy-list-wrap': true
             },
             style: {
-                height: this.viewportHeight + 'px'
+                height: this.isPercent ? this.viewportHeight : this.viewportHeight + 'px'
             }
         }, [children]);
     },
@@ -133,13 +137,24 @@ export default {
                 this.renderList = this.getLazyList();
             }
         },
+
+        updateScrollbar () {
+            if (this.scrollbar) {
+                this.$nextTick(() => {
+                    this.scrollbar.update({
+                        contentHeight: this.contentHeight
+                    });
+                });
+            }
+        },
         
         // get demand list
         getDemandList () {
             const list = [];
+            const vh = this.isPercent ? this.wrapRect.height : this.viewportHeight;
 
             const from = Math.floor(this.scrollTop / this.ih); 
-            const to = Math.ceil((this.scrollTop + this.viewportHeight) / this.ih);
+            const to = Math.ceil((this.scrollTop + vh) / this.ih);
 
             for (let i = from; i < to; i++) {
                 if (typeof this.data[i] !== 'undefined') {
@@ -166,10 +181,11 @@ export default {
                 return this.renderList;
             }
             
-            const list = [].concat(this.renderList);            
+            const list = [].concat(this.renderList);
+            const vh = this.isPercent ? this.wrapRect.height : this.viewportHeight;            
 
             const from = list.length; 
-            const to = Math.ceil((this.scrollTop + this.viewportHeight) / this.ih);
+            const to = Math.ceil((this.scrollTop + vh) / this.ih);
 
             for (let i = from; i < to; i++) {
                 if (typeof this.data[i] !== 'undefined') {
@@ -197,11 +213,20 @@ export default {
 
         reachThreshold () {
             this.$emit('reach-threshold');
+        },
+
+        handleWinResize () {
+            this.wrapRect = this.$el.getBoundingClientRect();
+            if (this.scrollbar.rect.height !== this.wrapRect.height) {
+                this.updateRenderList();
+                this.updateScrollbar();
+            }
         }
     },
 
     mounted () {
         this.viewportWith = this.$el.clientWidth;
+        this.wrapRect = this.$el.getBoundingClientRect();
 
         this.data.length && this.initRenderList();
         this.$nextTick(() => {
@@ -211,10 +236,13 @@ export default {
             });
             this.$el.addEventListener('bs-update-scroll-value', this.updateScrollVal, false);
         });
+
+        window.addEventListener('resize', this.handleWinResize, false);
     },
 
     beforeDestroy () {
         this.scrollbar && this.scrollbar.destroy();
         this.$el.removeEventListener('bs-update-scroll-value', this.updateScrollVal, false);
+        window.removeEventListener('resize', this.handleWinResize, false);
     }
 };
