@@ -1,4 +1,5 @@
 import BeautifyScrollbar from 'beautify-scrollbar';
+import debounce from './debounce';
 
 const VOEWPORT_MIN_HEIGHT = 100;
 const ITEM_MIN_HEIGHT = 20;
@@ -77,9 +78,11 @@ export default {
     },
 
     watch: {
-        data (val) {
+        data (val, oldVal) {
             this.initRenderList();
-            this.updateScrollbar();
+            if (val.length !== oldVal.length) {
+                this.updateScrollbar();
+            }
         },
 
         scrollTop (val) {
@@ -164,8 +167,7 @@ export default {
                                 'lazy-list-item': true
                             },
                             style: {
-                                height: this.ih + 'px',
-                                lineHeight: this.ih + 'px'
+                                height: this.ih + 'px'
                             }
                         }, this.$scopedSlots.default ? this.$scopedSlots.default(this.data[i]) : [i])
                     );
@@ -195,8 +197,7 @@ export default {
                                 'lazy-list-item': true
                             },
                             style: {
-                                height: this.ih + 'px',
-                                lineHeight: this.ih + 'px'
+                                height: this.ih + 'px'
                             }
                         }, this.$scopedSlots.default ? this.$scopedSlots.default(this.data[i]) : [i])
                     );
@@ -224,6 +225,10 @@ export default {
         }
     },
 
+    created () {
+        this.winResize = debounce(this.handleWinResize);
+    },
+
     mounted () {
         this.viewportWith = this.$el.clientWidth;
         this.wrapRect = this.$el.getBoundingClientRect();
@@ -237,12 +242,12 @@ export default {
             this.$el.addEventListener('bs-update-scroll-value', this.updateScrollVal, false);
         });
 
-        window.addEventListener('resize', this.handleWinResize, false);
+        window.addEventListener('resize', this.winResize, false);
     },
 
     beforeDestroy () {
         this.scrollbar && this.scrollbar.destroy();
         this.$el.removeEventListener('bs-update-scroll-value', this.updateScrollVal, false);
-        window.removeEventListener('resize', this.handleWinResize, false);
+        window.removeEventListener('resize', this.winResize, false);
     }
 };
