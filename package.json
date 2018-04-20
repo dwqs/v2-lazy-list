@@ -1,6 +1,6 @@
 {
   "name": "v2-lazy-list",
-  "version": "2.2.3",
+  "version": "2.2.5",
   "description": "A simple lazy load list component based Vue 2.x",
   "author": "dwqs",
   "license": "MIT",
