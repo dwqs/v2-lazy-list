@@ -161,8 +161,13 @@ export default {
             const list = [];
             const vh = this.isPercent ? this.wrapRect.height : this.viewportHeight;
 
-            const from = Math.floor(this.scrollTop / this.ih); 
+            let from = Math.floor(this.scrollTop / this.ih); 
             const to = Math.ceil((this.scrollTop + vh) / this.ih);
+
+            // fix: list is empty
+            if (this.contentHeight < this.wrapRect.height) {
+                from = 0;
+            }
 
             for (let i = from; i < to; i++) {
                 if (typeof this.data[i] !== 'undefined') {
