@@ -75,7 +75,8 @@ export default {
             contentMarginTop: 0,
 
             scrollbar: null,
-            wrapRect: null
+            wrapRect: null,
+            isScrollToBottom: false
         };
     },
 
@@ -148,7 +149,8 @@ export default {
             if (this.scrollbar) {
                 this.$nextTick(() => {
                     this.scrollbar.update({
-                        contentHeight: this.contentHeight
+                        contentHeight: this.contentHeight,
+                        isScrollToBottom: this.isScrollToBottom
                     });
                 });
             }
@@ -251,6 +253,12 @@ export default {
                 contentHeight: this.contentHeight
             });
             this.$el.addEventListener('bs-update-scroll-value', this.updateScrollVal, false);
+            this.$el.addEventListener('bs-y-reach-end', () => {
+                this.isScrollToBottom = true;
+            }, false);
+            this.$el.addEventListener('bs-y-middle', () => {
+                this.isScrollToBottom = false;
+            }, false);
         });
 
         window.addEventListener('resize', this.winResize, false);
@@ -259,6 +267,8 @@ export default {
     beforeDestroy () {
         this.scrollbar && this.scrollbar.destroy();
         this.$el.removeEventListener('bs-update-scroll-value', this.updateScrollVal, false);
+        this.$el.removeEventListener('bs-y-reach-end');
+        this.$el.removeEventListener('bs-y-middle');
         window.removeEventListener('resize', this.winResize, false);
     }
 };
