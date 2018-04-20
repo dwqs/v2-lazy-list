@@ -46,20 +46,20 @@ module.exports = {
         }
     },
     plugins: [
-        new ParallelUglifyPlugin({
-            workerCount: os.cpus().length,
-            cacheDir: '.cache/',
-            sourceMap: true,
-            uglifyJS: {
-                compress: {
-                    warnings: false,
-                    /* eslint-disable */
-                    drop_debugger: true,
-                    drop_console: true
-                },
-                mangle: true
-            }
-        }),
+        // new ParallelUglifyPlugin({
+        //     workerCount: os.cpus().length,
+        //     cacheDir: '.cache/',
+        //     sourceMap: true,
+        //     uglifyJS: {
+        //         compress: {
+        //             warnings: false,
+        //             /* eslint-disable */
+        //             drop_debugger: true,
+        //             drop_console: true
+        //         },
+        //         mangle: true
+        //     }
+        // }),
 
         new ProgressBarPlugin()
     ]
