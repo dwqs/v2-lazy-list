@@ -168,7 +168,8 @@
                         this.list2.push('No more data');
                         return;
                     }
-                    const arr = this.list2;
+                    // fix #2
+                    const arr = [].concat(this.list2);
                     for (let i = (this.page - 1) * this.pageSize, l = this.page * this.pageSize; i < l; i++) {
                         arr.push(i);
                     }
