@@ -1,4 +1,6 @@
 import BeautifyScrollbar from 'beautify-scrollbar';
+import raf from 'raf';
+
 import debounce from './debounce';
 
 const VOEWPORT_MIN_HEIGHT = 100;
@@ -86,7 +88,8 @@ export default {
         },
 
         scrollTop (val) {
-            this.updateRenderList();
+            this.$emit('scrolling');
+            raf(this.updateRenderList);
             if (this.threshold > 0 && this.contentHeight - this.viewportHeight - val <= this.threshold) {
                 this.reachThreshold();
             }
@@ -208,8 +211,16 @@ export default {
             return list;
         },
 
+        scrollStop () {
+            this.$emit('scroll-stop');
+        },
+
         updateScrollVal () {
+            clearTimeout(this.timer);
             this.scrollTop = this.scrollbar.element.scrollTop;
+            this.timer = setTimeout(() => {
+                this.scrollStop();
+            }, 300);
         },
 
         reachThreshold () {
