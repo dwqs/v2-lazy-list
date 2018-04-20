@@ -46,6 +46,8 @@ Visit the [examples](https://dwqs.github.io/v2-lazy-list/).
 |  Event Name  |  Description  |  Parameters |
 |  :--:  |  :--:  |  :--: |
 | reach-threshold | triggers when reaching threshold value| - |
+| scrolling | triggers when element is scrolling | - |
+| scroll-stop | triggers when element stop scroll | - |
 
 ## Development
 ```
